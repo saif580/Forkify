@@ -7,13 +7,15 @@ class RecipeView {
   //private variables/members;cannot be accessed outside this class declared with #.
   #parentElement = document.querySelector('.recipe')
   #data
+  #errorMessage='We could not find that recipe. Please try another one!';
+  #message="";
 
   //Rendering the receipe
   render (data) {
-    this.#data = data;
-    const markUp = this.#generateMarkup();
-    this.#clear();
-    this.#parentElement.insertAdjacentHTML('afterbegin', markUp);
+    this.#data = data
+    const markUp = this.#generateMarkup()
+    this.#clear()
+    this.#parentElement.insertAdjacentHTML('afterbegin', markUp)
   }
 
   //Clearing HTML
@@ -32,6 +34,44 @@ class RecipeView {
     `
     this.#clear()
     this.#parentElement.insertAdjacentHTML('afterbegin', spinner)
+  }
+
+  //Render Error markup
+  renderError (message=this.#errorMessage) {
+    const markup = `
+    <div class="error">
+            <div>
+              <svg>
+                <use href="${icons}#icon-alert-triangle"></use>
+              </svg>
+            </div>
+            <p>${message}</p>
+          </div>
+    `
+    this.#clear()
+    this.#parentElement.insertAdjacentHTML('afterbegin', markup)
+  }
+
+    //Render Message markup
+    renderMessage (message=this.#message) {
+        const markup = `
+        <div class="error">
+                <div>
+                  <svg>
+                    <use href="${icons}#icon-smile"></use>
+                  </svg>
+                </div>
+                <p>${message}</p>
+              </div>
+        `
+        this.#clear()
+        this.#parentElement.insertAdjacentHTML('afterbegin', markup)
+      }
+
+  addHandlerRender (handler) {
+    //Loading receipe on recipe change and browser's new window
+    const eventType = ['hashchange', 'load']
+    eventType.forEach(ev => window.addEventListener(ev, handler))
   }
 
   //Generating markup for different recipes

@@ -1,19 +1,21 @@
 //Business Logic Goes Here
 
+import {API_URL} from './config.js';
+import {getJSON} from './helpers.js';
+
 //State To Store Data
 export const state = {
-  recipe: {}
+  recipe: {},
+  search:{
+    query:'',
+    results:[],
+  }
 };
 
 //Business Logic To Load Recipe
 export const loadRecipe = async function (id) {
   try {
-    const res = await fetch(
-      `https://forkify-api.herokuapp.com/api/v2/recipes/${id}`
-    );
-    const data = await res.json();
-    //Throwing Error If res.ok is False
-    if (!res.ok) throw new Error(`${data.message} (${res.status})`);
+    const data=await getJSON(`${API_URL}${id}`)
     const { recipe } = data.data;
     //Stroring Data In State
     state.recipe = {
@@ -27,6 +29,27 @@ export const loadRecipe = async function (id) {
       ingredints: recipe.ingredients
     };
   } catch (err) {
-    alert(err)
-  }
+    console.error(`${err}`);
+    throw err
+  } 
+}
+
+export const loadSearchResult=async function(query){
+    try {
+        state.search.query=query;
+        const data=await getJSON(`${API_URL}?search=${query}`)
+        console.log(data);
+        state.search.results=data.data.recipes.map(rec=>{
+            return {
+                id: rec.id,
+                title: rec.title,
+                publisher: rec.publisher,
+                image: rec.image_url,
+            }
+        })
+        console.log(state.search.results);
+    } catch(err){
+        console.log(err);
+        throw err;
+    }
 }
