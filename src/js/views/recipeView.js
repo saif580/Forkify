@@ -1,21 +1,27 @@
+//importing icons and fractional(to show how many cups,spoons used)
 import icons from 'url:../../img/icons.svg'
 import { Fraction } from 'fractional'
 
+//creating class for receipe view then exporting the object of this class
 class RecipeView {
+  //private variables/members;cannot be accessed outside this class declared with #.
   #parentElement = document.querySelector('.recipe')
   #data
 
+  //Rendering the receipe
   render (data) {
-    this.#data = data
-    const markUp = this.#generateMarkup()
-    this.#clear()
-    this.#parentElement.insertAdjacentHTML('afterbegin', markUp)
+    this.#data = data;
+    const markUp = this.#generateMarkup();
+    this.#clear();
+    this.#parentElement.insertAdjacentHTML('afterbegin', markUp);
   }
 
+  //Clearing HTML
   #clear () {
     this.#parentElement.innerHTML = ''
   }
 
+  //Spinner loading function
   renderSpinner = function () {
     const spinner = `
     <div class="spinner">
@@ -28,6 +34,7 @@ class RecipeView {
     this.#parentElement.insertAdjacentHTML('afterbegin', spinner)
   }
 
+  //Generating markup for different recipes
   #generateMarkup () {
     return `
     <figure class="recipe__fig">
@@ -87,9 +94,7 @@ class RecipeView {
         <div class="recipe__ingredients">
           <h2 class="heading--2">Recipe ingredients</h2>
           <ul class="recipe__ingredient-list">
-          ${this.#data.ingredints
-            .map(this.#generateMarkupIngredient)
-            .join(' ')}
+          ${this.#data.ingredints.map(this.#generateMarkupIngredient).join(' ')}
           </ul>
         </div>
 
@@ -115,6 +120,8 @@ class RecipeView {
         </div>
     `
   }
+
+  //Generating ingredients markup
   #generateMarkupIngredient (ing) {
     return `
     <li class="recipe__ingredient">
