@@ -4,6 +4,7 @@ import * as model from './model.js';
 //importing views
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
+import resultsView from './views/resultsView.js';
 //importing parcel and polyfilling
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
@@ -40,6 +41,7 @@ const controlRecipes = async function () {
 
 const controlSerachResults=async function(){
   try {
+    resultsView.renderSpinner();
     //Get search query
     const query=searchView.getQuery();
     if(!query) return;
@@ -48,7 +50,9 @@ const controlSerachResults=async function(){
     await model.loadSearchResult(query)
 
     //render the rsults
-    console.log(model.state.search.results);
+    // console.log(model.state.search.results);
+    resultsView.render(model.state.search.results);
+    console.log(_data);
   } catch(err) {
     console.log(err);
   }

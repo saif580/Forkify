@@ -1,74 +1,17 @@
 //importing icons and fractional(to show how many cups,spoons used)
 import icons from 'url:../../img/icons.svg'
 import { Fraction } from 'fractional'
-import View from './view';
+import View from './view.js';
 
 //creating class for receipe view then exporting the object of this class
-class RecipeView {
+class RecipeView extends View{
   //private variables/members;cannot be accessed outside this class declared with _.
-  _parentElement = document.querySelector('.recipe')
-  _data
+  _parentElement = document.querySelector('.recipe');
   _errorMessage='We could not find that recipe. Please try another one!';
   _message="";
+  
 
-  //Rendering the receipe
-  render (data) {
-    this._data = data
-    const markUp = this._generateMarkup()
-    this._clear()
-    this._parentElement.insertAdjacentHTML('afterbegin', markUp)
-  }
-
-  //Clearing HTML
-  _clear () {
-    this._parentElement.innerHTML = ''
-  }
-
-  //Spinner loading function
-  renderSpinner = function () {
-    const spinner = `
-    <div class="spinner">
-          <svg>
-            <use href="${icons}_icon-loader"></use>
-          </svg>
-        </div>
-    `
-    this._clear()
-    this._parentElement.insertAdjacentHTML('afterbegin', spinner)
-  }
-
-  //Render Error markup
-  renderError (message=this._errorMessage) {
-    const markup = `
-    <div class="error">
-            <div>
-              <svg>
-                <use href="${icons}_icon-alert-triangle"></use>
-              </svg>
-            </div>
-            <p>${message}</p>
-          </div>
-    `
-    this._clear()
-    this._parentElement.insertAdjacentHTML('afterbegin', markup)
-  }
-
-    //Render Message markup
-    renderMessage (message=this._message) {
-        const markup = `
-        <div class="error">
-                <div>
-                  <svg>
-                    <use href="${icons}_icon-smile"></use>
-                  </svg>
-                </div>
-                <p>${message}</p>
-              </div>
-        `
-        this._clear()
-        this._parentElement.insertAdjacentHTML('afterbegin', markup)
-      }
-
+  
   addHandlerRender (handler) {
     //Loading receipe on recipe change and browser's new window
     const eventType = ['hashchange', 'load']
@@ -90,7 +33,7 @@ class RecipeView {
         <div class="recipe__details">
           <div class="recipe__info">
             <svg class="recipe__info-icon">
-              <use href="${icons}_icon-clock"></use>
+              <use href="${icons}#icon-clock"></use>
             </svg>
             <span class="recipe__info-data recipe__info-data--minutes">${
               this._data.cookingTime
@@ -99,7 +42,7 @@ class RecipeView {
           </div>
           <div class="recipe__info">
             <svg class="recipe__info-icon">
-              <use href="${icons}_icon-users"></use>
+              <use href="${icons}#icon-users"></use>
             </svg>
             <span class="recipe__info-data recipe__info-data--people">${
               this._data.servings
@@ -109,12 +52,12 @@ class RecipeView {
             <div class="recipe__info-buttons">
               <button class="btn--tiny btn--increase-servings">
                 <svg>
-                  <use href="${icons}_icon-minus-circle"></use>
+                  <use href="${icons}#icon-minus-circle"></use>
                 </svg>
               </button>
               <button class="btn--tiny btn--increase-servings">
                 <svg>
-                  <use href="${icons}_icon-plus-circle"></use>
+                  <use href="${icons}#icon-plus-circle"></use>
                 </svg>
               </button>
             </div>
@@ -122,12 +65,12 @@ class RecipeView {
 
           <div class="recipe__user-generated">
             <svg>
-              <use href="${icons}_icon-user"></use>
+              <use href="${icons}#icon-user"></use>
             </svg>
           </div>
           <button class="btn--round">
             <svg class="">
-              <use href="${icons}_icon-bookmark-fill"></use>
+              <use href="${icons}#icon-bookmark-fill"></use>
             </svg>
           </button>
         </div>
@@ -155,7 +98,7 @@ class RecipeView {
           >
             <span>Directions</span>
             <svg class="search__icon">
-              <use href="${icons}_icon-arrow-right"></use>
+              <use href="${icons}#icon-arrow-right"></use>
             </svg>
           </a>
         </div>
@@ -167,7 +110,7 @@ class RecipeView {
     return `
     <li class="recipe__ingredient">
     <svg class="recipe__icon">
-      <use href="${icons}_icon-check"></use>
+      <use href="${icons}#icon-check"></use>
     </svg>
     <div class="recipe__quantity">${
       ing.quantity ? new Fraction(ing.quantity).toString() : ''
