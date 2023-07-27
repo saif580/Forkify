@@ -9,7 +9,9 @@ import resultsView from './views/resultsView.js';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
-
+if(module.hot){
+  module.hot.accept();
+}
 
 // https://forkify-api.herokuapp.com/v2
 
@@ -50,9 +52,7 @@ const controlSerachResults=async function(){
     await model.loadSearchResult(query)
 
     //render the rsults
-    // console.log(model.state.search.results);
     resultsView.render(model.state.search.results);
-    console.log(_data);
   } catch(err) {
     console.log(err);
   }

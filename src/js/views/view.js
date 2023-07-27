@@ -4,6 +4,7 @@ export default class View {
   _data
   //Rendering the receipe
   render (data) {
+    if(!data || (Array.isArray(data) && data.length===0)) return this.renderError();
     this._data = data
     const markUp = this._generateMarkup()
     this._clear()
