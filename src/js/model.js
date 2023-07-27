@@ -1,7 +1,9 @@
 //Business Logic Goes Here
 
+import { stat } from 'fs';
 import {API_URL} from './config.js';
 import {getJSON} from './helpers.js';
+import { RES_PER_PAGE } from './config.js';
 
 //State To Store Data
 export const state = {
@@ -9,6 +11,8 @@ export const state = {
   search:{
     query:'',
     results:[],
+    page:1,
+    resultsPerPage:RES_PER_PAGE
   }
 };
 
@@ -52,4 +56,12 @@ export const loadSearchResult=async function(query){
         console.log(err);
         throw err;
     }
+}
+
+export const getSearchResultsPage= function(page=state.search.page){
+    state.search.page=page;
+    //page=1 s=(0*10),e=10; page=2 s=(1*10),e=20
+    const start=(page-1)*state.search.resultsPerPage;
+    const end=page*state.search.resultsPerPage;
+    return state.search.results.slice(start,end);
 }
