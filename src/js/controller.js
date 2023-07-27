@@ -5,6 +5,7 @@ import * as model from './model.js';
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
+import paginationView from './views/paginationView.js';
 //importing parcel and polyfilling
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
@@ -53,13 +54,25 @@ const controlSerachResults=async function(){
 
     //render the rsults
     resultsView.render(model.getSearchResultsPage());
+
+    //Render intial pagination
+    paginationView.render(model.state.search)
   } catch(err) {
     console.log(err);
   }
 };
 
+const controlPagination=function(goToPage){
+  //render new results
+  resultsView.render(model.getSearchResultsPage(goToPage));
+
+  //Render intial pagination
+  paginationView.render(model.state.search);
+}
+
 const init=function(){
   recipeView.addHandlerRender(controlRecipes);
-  searchView.addHandlerSearch(controlSerachResults)
+  searchView.addHandlerSearch(controlSerachResults);
+  paginationView.addHandlerClick(controlPagination);
 }
 init();
