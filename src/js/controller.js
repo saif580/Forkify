@@ -78,10 +78,15 @@ const controlServings = function (newServings) {
   recipeView.render(model.state.recipe);
 };
 
+const newFeature=function(){
+  console.log("welcome To the Application");
+}
+
 const init=function(){
   recipeView.addHandlerRender(controlRecipes);
   searchView.addHandlerSearch(controlSerachResults);
   paginationView.addHandlerClick(controlPagination);
   recipeView.addHandlerUpdateServings(controlServings);
+  newFeature()
 }
 init();
