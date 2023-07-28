@@ -14,11 +14,6 @@ if(module.hot){
   module.hot.accept();
 }
 
-// https://forkify-api.herokuapp.com/v2
-
-// APT key-56ba4b15-c90e-4d7f-851d-6d4615c9ea3a
-
-///////////////////////////////////////
 //controlRecipe  function
 const controlRecipes = async function () {
   try {
